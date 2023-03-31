@@ -14,6 +14,7 @@
 		EAEEBEC129C3844900AB5846 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAEEBEC029C3844900AB5846 /* Assets.xcassets */; };
 		EAEEBEC429C3844900AB5846 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAEEBEC229C3844900AB5846 /* LaunchScreen.storyboard */; };
 		EAEEBECC29D412FB00AB5846 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEEBECB29D412FB00AB5846 /* Car.swift */; };
+		EAEEBECE29D5DC6700AB5846 /* CreateCarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEEBECD29D5DC6700AB5846 /* CreateCarViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		EAEEBEC329C3844900AB5846 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EAEEBEC529C3844900AB5846 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EAEEBECB29D412FB00AB5846 /* Car.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
+		EAEEBECD29D5DC6700AB5846 /* CreateCarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,8 +63,9 @@
 				EAEEBEB729C3844800AB5846 /* AppDelegate.swift */,
 				EAEEBEB929C3844800AB5846 /* SceneDelegate.swift */,
 				EAEEBEBB29C3844800AB5846 /* ViewController.swift */,
-				EAEEBEBD29C3844800AB5846 /* Main.storyboard */,
+				EAEEBECD29D5DC6700AB5846 /* CreateCarViewController.swift */,
 				EAEEBECB29D412FB00AB5846 /* Car.swift */,
+				EAEEBEBD29C3844800AB5846 /* Main.storyboard */,
 				EAEEBEC029C3844900AB5846 /* Assets.xcassets */,
 				EAEEBEC229C3844900AB5846 /* LaunchScreen.storyboard */,
 				EAEEBEC529C3844900AB5846 /* Info.plist */,
@@ -141,6 +144,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAEEBECE29D5DC6700AB5846 /* CreateCarViewController.swift in Sources */,
 				EAEEBEBC29C3844800AB5846 /* ViewController.swift in Sources */,
 				EAEEBEB829C3844800AB5846 /* AppDelegate.swift in Sources */,
 				EAEEBECC29D412FB00AB5846 /* Car.swift in Sources */,
