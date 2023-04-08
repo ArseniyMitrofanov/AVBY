@@ -3,11 +3,15 @@
 //  AVBY
 //
 //  Created by Арсений on 16.03.23.
-//
+//menucard
 
 import UIKit
 
-class ViewController: UIViewController {
+enum Section {
+    case section
+}
+
+class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDelegate{
     let horizontalStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
@@ -23,10 +27,10 @@ class ViewController: UIViewController {
         view.placeholder = "Введите название авто"
         return view
     }()
-    let searchButton: UIButton = {
+    let createCarButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.tintColor = .white
         button.backgroundColor = .systemBlue
         return button
@@ -34,34 +38,157 @@ class ViewController: UIViewController {
     let superSearchButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(systemName: "gear"), for: .normal)
+        button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
         button.tintColor = .white
         button.backgroundColor = .systemBlue
         return button
     }()
-
+    var carsCollectionView: UICollectionView!
+    var carsDataSourse: UICollectionViewDiffableDataSource<Section, Car>!
     override func viewDidLoad() {
         super.viewDidLoad()
-      makeLayout()
+        superSearchButton.addTarget(self, action: #selector(superSearchButtonTapped), for: .touchUpInside)
+        createCarButton.addTarget(self, action: #selector(createCarButtonTapped), for: .touchUpInside)
+        textField.delegate = self
+        carsCollectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: generateCollectionViewLayout())
+        carsCollectionView?.translatesAutoresizingMaskIntoConstraints = false
+        carsCollectionView.delegate = self
+        makeLayout()
+        createDataSource()
+        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        loadData(arrayCars: [
+                             Car(brand: "Mercedes", year: 2007, price: 15000, mileage: 265000, name: "W211 E320 CDI", volume: 3, horsePower: 224, gearBoxType: .automatic, color: "metalic", bodyType: .sedan, description: "пушка гонка дракон", engineType: .disel, ownerContacts: "+375291697223", photo: UIImage(named: "e320cdi")! ),
+                             
+                            ])
     }
     
     func makeLayout(){
         self.view.addSubview(horizontalStackView)
         horizontalStackView.addArrangedSubview(superSearchButton)
         horizontalStackView.addArrangedSubview(textField)
-        horizontalStackView.addArrangedSubview(searchButton)
+        horizontalStackView.addArrangedSubview(createCarButton)
+        self.view.addSubview(carsCollectionView)
         
         NSLayoutConstraint.activate([
-            horizontalStackView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            horizontalStackView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: -20),
             horizontalStackView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor,constant: 5),
             horizontalStackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             superSearchButton.widthAnchor.constraint(equalToConstant: 70),
-            searchButton.widthAnchor.constraint(equalToConstant: 70),
-                                     
-                                     
+            createCarButton.widthAnchor.constraint(equalToConstant: 70),
+            carsCollectionView.topAnchor.constraint(equalTo: horizontalStackView.bottomAnchor, constant: 10),
+            carsCollectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor,constant: 5),
+            carsCollectionView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            carsCollectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
         ])
         
     }
+    func generateCollectionViewLayout() -> UICollectionViewLayout {
+        let sectionProvider = {
+            (int: Int, enviroment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection in
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1/4))
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            let section = NSCollectionLayoutSection(group: group)
+            section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+            return section
+        }
+        return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
+    }
+    func createDataSource() {
+        
+        let cellRegistration = UICollectionView.CellRegistration<UICollectionViewCell, Car> { cell, indexPath, car in
+            if !cell.subviews.isEmpty{
+                cell.contentView.subviews.forEach {$0.removeFromSuperview()}
+            }
+            let ImageView = UIImageView(image: car.photo)
+            ImageView.frame = CGRect(x: 0, y: 0, width: cell.contentView.frame.height, height: cell.contentView.frame.height)
+            let stackView = UIStackView()
+            stackView.axis = .vertical
+            stackView.frame = CGRect(x: cell.contentView.frame.height + 5, y: 0, width: (cell.contentView.frame.width - cell.contentView.frame.height - 5), height: cell.contentView.frame.height)
+            stackView.distribution = .fillEqually
+            let brandLabel = UILabel()
+            brandLabel.text = car.brand
+            brandLabel.font = .boldSystemFont(ofSize: 25)
+            let nameLabel = UILabel()
+            nameLabel.text = car.name
+            nameLabel.font = .boldSystemFont(ofSize: 20)
+            let yearMileageLabel = UILabel()
+            yearMileageLabel.text = String(car.year) + ", " + String(car.mileage) + " км "
+            let engineLabel = UILabel()
+            engineLabel.text = ""
+            switch car.engineType {
+            case .disel:
+                engineLabel.text?.append(String(car.volume) + " л. Дизель")
+            case .petrol:
+                engineLabel.text?.append(String(car.volume) + " л. Бензин")
+            case .gas:
+                engineLabel.text?.append(String(car.volume) + " л. Газ")
+            case .electic:
+                engineLabel.text?.append("электро")
+            case .hybrid:
+                engineLabel.text?.append(String(car.volume) + " л. Гибрид")
+            }
+            let priceLabel = UILabel()
+            priceLabel.text = String(car.price) + " $"
+            priceLabel.font = .systemFont(ofSize: 20)
+            priceLabel.textColor = .red
+            stackView.addArrangedSubview(brandLabel)
+            stackView.addArrangedSubview(nameLabel)
+            stackView.addArrangedSubview(yearMileageLabel)
+            stackView.addArrangedSubview(engineLabel)
+            stackView.addArrangedSubview(priceLabel)
+            cell.contentView.addSubview(stackView)
+            cell.contentView.addSubview(ImageView)
+            cell.contentView.layer.borderColor = UIColor.lightGray.cgColor
+            cell.contentView.layer.borderWidth = 1
+        }
+        
+        carsDataSourse = UICollectionViewDiffableDataSource(collectionView: carsCollectionView) { collectionView, indexPath, itemIdentifier in
+            let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
+            return cell
+            
+        }
+    }
+    func loadData(arrayCars: [Car]) {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Car>()
+        snapshot.appendSections([.section])
+        snapshot.appendItems(arrayCars, toSection: .section)
+        carsDataSourse.applySnapshotUsingReloadData(snapshot)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        let text = textField.text
+        print(text)
+        return true
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = CreateCarViewController()
+        vc.view.backgroundColor = .white
+        let backBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = backBarButtonItem
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func createCarButtonTapped(){
+        let vc = CreateCarViewController()
+        vc.view.backgroundColor = .white
+        let backBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = backBarButtonItem
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    @objc func superSearchButtonTapped(){
+        let vc = CreateCarViewController()
+        vc.view.backgroundColor = .white
+        let backBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = backBarButtonItem
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
     
 }
 

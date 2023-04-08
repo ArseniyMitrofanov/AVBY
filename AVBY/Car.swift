@@ -13,6 +13,12 @@ enum BodyType {
     case coupe
     case shotingBrake
 }
+
+enum GearBoxType {
+    case automatic
+    case manual
+    case variator
+}
 enum EngineType {
     case disel
     case petrol
@@ -21,7 +27,8 @@ enum EngineType {
     case hybrid
 }
 
-class Car {
+struct Car: Hashable {
+  
     let brand: String
     let year: Int
     let price: Int
@@ -29,6 +36,7 @@ class Car {
     let name: String
     let volume: Double
     let horsePower: Int
+    let gearBoxType: GearBoxType
     let color: String
     let bodyType: BodyType
     let description: String
@@ -36,7 +44,7 @@ class Car {
     let ownerContacts: String
     let photo: UIImage
     
-    init(brand: String, year: Int, price: Int, mileage: Int, name: String, volume: Double, horsePower: Int, color: String, bodyType: BodyType, description: String, engineType: EngineType, ownerContacts: String, photo: UIImage) {
+    init(brand: String, year: Int, price: Int, mileage: Int, name: String, volume: Double, horsePower: Int, gearBoxType: GearBoxType, color: String, bodyType: BodyType, description: String, engineType: EngineType, ownerContacts: String, photo: UIImage) {
         self.brand = brand
         self.year = year
         self.price = price
@@ -44,6 +52,7 @@ class Car {
         self.name = name
         self.volume = volume
         self.horsePower = horsePower
+        self.gearBoxType = gearBoxType
         self.color = color
         self.bodyType = bodyType
         self.description = description
