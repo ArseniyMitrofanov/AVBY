@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		EA8A0F1029DC10440016F8B3 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A0F0F29DC10440016F8B3 /* CollectionViewCell.swift */; };
+		EA9D660029E1CD6F00D7BCF8 /* CarsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D65FF29E1CD6F00D7BCF8 /* CarsService.swift */; };
 		EAEEBEB829C3844800AB5846 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEEBEB729C3844800AB5846 /* AppDelegate.swift */; };
 		EAEEBEBA29C3844800AB5846 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEEBEB929C3844800AB5846 /* SceneDelegate.swift */; };
 		EAEEBEBC29C3844800AB5846 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEEBEBB29C3844800AB5846 /* ViewController.swift */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		EA8A0F0F29DC10440016F8B3 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		EA9D65FF29E1CD6F00D7BCF8 /* CarsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarsService.swift; sourceTree = "<group>"; };
 		EAEEBEB429C3844800AB5846 /* AVBY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AVBY.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAEEBEB729C3844800AB5846 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EAEEBEB929C3844800AB5846 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 				EAEEBEB729C3844800AB5846 /* AppDelegate.swift */,
 				EAEEBEB929C3844800AB5846 /* SceneDelegate.swift */,
 				EAEEBEBB29C3844800AB5846 /* ViewController.swift */,
+				EA9D65FF29E1CD6F00D7BCF8 /* CarsService.swift */,
 				EAEEBECD29D5DC6700AB5846 /* CreateCarViewController.swift */,
 				EAEEBECB29D412FB00AB5846 /* Car.swift */,
 				EAEEBEBD29C3844800AB5846 /* Main.storyboard */,
@@ -150,6 +153,7 @@
 				EAEEBECE29D5DC6700AB5846 /* CreateCarViewController.swift in Sources */,
 				EAEEBEBC29C3844800AB5846 /* ViewController.swift in Sources */,
 				EA8A0F1029DC10440016F8B3 /* CollectionViewCell.swift in Sources */,
+				EA9D660029E1CD6F00D7BCF8 /* CarsService.swift in Sources */,
 				EAEEBEB829C3844800AB5846 /* AppDelegate.swift in Sources */,
 				EAEEBECC29D412FB00AB5846 /* Car.swift in Sources */,
 				EAEEBEBA29C3844800AB5846 /* SceneDelegate.swift in Sources */,

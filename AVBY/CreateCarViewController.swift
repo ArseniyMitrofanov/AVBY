@@ -7,19 +7,6 @@
 
 import Foundation
 import UIKit
-//let brand: String
-//let year: Int
-//let price: Int
-//let mileage: Int
-//let name: String
-//let volume: Double
-//let horsePower: Int
-//let color: String
-//let bodyType: BodyType
-//let description: String
-//let engineType: EngineType
-//let ownerContacts: String
-//let photo: UIImage
 class CreateCarViewController: UIViewController {
     let brandTextField: UITextField = {
         let textField = UITextField()
@@ -90,11 +77,11 @@ class CreateCarViewController: UIViewController {
         button.imageView?.image = UIImage(systemName: "camera")
             return button
     }()
-    
-    
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+
+
     }
 }

@@ -3,7 +3,7 @@
 //  AVBY
 //
 //  Created by Арсений on 16.03.23.
-//menucard
+//
 
 import UIKit
 
@@ -53,15 +53,14 @@ class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDel
         carsCollectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: generateCollectionViewLayout())
         carsCollectionView?.translatesAutoresizingMaskIntoConstraints = false
         carsCollectionView.delegate = self
+        carsCollectionView.refreshControl = UIRefreshControl()
+        carsCollectionView.refreshControl?.addTarget(self, action: #selector(refreshCollectionView), for: .valueChanged)
         makeLayout()
         createDataSource()
         
     }
     override func viewWillAppear(_ animated: Bool) {
-        loadData(arrayCars: [
-                             Car(brand: "Mercedes", year: 2007, price: 15000, mileage: 265000, name: "W211 E320 CDI", volume: 3, horsePower: 224, gearBoxType: .automatic, color: "metalic", bodyType: .sedan, description: "пушка гонка дракон", engineType: .disel, ownerContacts: "+375291697223", photo: UIImage(named: "e320cdi")! ),
-                             
-                            ])
+        loadSortedData(textToSort: nil)
     }
     
     func makeLayout(){
@@ -72,7 +71,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDel
         self.view.addSubview(carsCollectionView)
         
         NSLayoutConstraint.activate([
-            horizontalStackView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: -20),
+            horizontalStackView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             horizontalStackView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor,constant: 5),
             horizontalStackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             superSearchButton.widthAnchor.constraint(equalToConstant: 70),
@@ -152,6 +151,15 @@ class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDel
             
         }
     }
+    func loadSortedData(textToSort: String?){
+        var arrayCars = CarsService.open.fetchArrayCars()
+        if (textToSort != nil)&&(textToSort != "") {
+            arrayCars = arrayCars.filter { car in
+                car.brand.contains(textToSort!)||car.name.contains(textToSort!)
+            }
+        }
+        loadData(arrayCars: arrayCars)
+    }
     func loadData(arrayCars: [Car]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Car>()
         snapshot.appendSections([.section])
@@ -161,8 +169,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDel
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
-        let text = textField.text
-        print(text)
+        loadSortedData(textToSort: textField.text)
         return true
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -186,6 +193,10 @@ class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDel
         let backBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem = backBarButtonItem
         navigationController?.pushViewController(vc, animated: true)
+    }
+    @objc func refreshCollectionView(){
+        loadSortedData(textToSort: textField.text)
+        carsCollectionView.refreshControl?.endRefreshing()
     }
     
     
