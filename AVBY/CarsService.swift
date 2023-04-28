@@ -21,7 +21,7 @@ class CarsService: NSObject {
             gearBoxType: .automatic,
             color: "metalic",
             bodyType: .sedan,
-            description: "пушка гонка дракон",
+            description: "Не бита, не крашена, 1 владелец, обслуживалась у официалов, пробег не смотан, как новая, сел и поехал, отдам почти бесплатно, звони!",
             engineType: .disel,
             ownerContacts: "+375291697223",
             photo: UIImage(named: "e320cdi")!),

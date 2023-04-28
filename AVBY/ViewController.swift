@@ -12,6 +12,7 @@ enum Section {
 }
 
 class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDelegate{
+    var currentArrayCar: [Car]!
     let horizontalStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
@@ -61,7 +62,21 @@ class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDel
         
     }
     override func viewWillAppear(_ animated: Bool) {
-        loadData(arrayCars: sortName(textToSort: nil))
+        if Singleton.shared.vcShouldSuperSearch {
+            self.superSearchButton.setImage(UIImage(systemName: "multiply"), for: .normal)
+            self.superSearchButton.backgroundColor = .red
+            if Singleton.shared.arrayCars != nil{
+                loadData(arrayCars: Singleton.shared.arrayCars!)
+                currentArrayCar = Singleton.shared.arrayCars!
+            }else{
+                loadData(arrayCars: sortName(textToSort: nil))
+                currentArrayCar = CarsService.open.fetchArrayCars()
+                print("error!!!")
+            }
+        }else{
+            loadData(arrayCars: sortName(textToSort: nil))
+            currentArrayCar = CarsService.open.fetchArrayCars()
+        }
     }
     
     func makeLayout(){
@@ -96,7 +111,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDel
             return section
         }
         return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
-  
+        
     }
     func createDataSource() {
         
@@ -172,14 +187,13 @@ class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDel
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         loadData(arrayCars: sortName(textToSort: textField.text))
+        currentArrayCar = sortName(textToSort: textField.text)
         return true
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = CreateCarViewController()
-        vc.view.backgroundColor = .white
-        let backBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: nil, action: nil)
-        navigationItem.backBarButtonItem = backBarButtonItem
-        navigationController?.pushViewController(vc, animated: true)
+        let vc = CarViewController()
+        vc.car = currentArrayCar[indexPath.row]
+     present(vc, animated: true)
     }
     
     @objc func createCarButtonTapped(){
@@ -190,18 +204,27 @@ class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDel
         navigationController?.pushViewController(vc, animated: true)
     }
     @objc func superSearchButtonTapped(){
-        let vc = SuperSearchViewController()
-        vc.view.backgroundColor = .white
-        let backBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: nil, action: nil)
-        navigationItem.backBarButtonItem = backBarButtonItem
-        navigationController?.pushViewController(vc, animated: true)
+        if Singleton.shared.vcShouldSuperSearch{
+            Singleton.shared.vcShouldSuperSearch = false
+            Singleton.shared.arrayCars = nil
+            self.superSearchButton.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+            self.superSearchButton.backgroundColor = .systemBlue
+            loadData(arrayCars: sortName(textToSort: nil))
+        }else{
+            let vc = SuperSearchViewController()
+            vc.view.backgroundColor = .white
+            let backBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: nil, action: nil)
+            navigationItem.backBarButtonItem = backBarButtonItem
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     @objc func refreshCollectionView(){
-      
+        
         carsCollectionView.refreshControl?.endRefreshing()
     }
     
     
     
 }
+
 

@@ -10,6 +10,8 @@
 		EA9D660029E1CD6F00D7BCF8 /* CarsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D65FF29E1CD6F00D7BCF8 /* CarsService.swift */; };
 		EA9D662C29FA549900D7BCF8 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D662B29FA549900D7BCF8 /* ImagePicker.swift */; };
 		EA9D663B29FBB7FC00D7BCF8 /* SuperSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D663A29FBB7FC00D7BCF8 /* SuperSearchViewController.swift */; };
+		EA9D663D29FBF09E00D7BCF8 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D663C29FBF09D00D7BCF8 /* Singleton.swift */; };
+		EAB3845B29FBF9FB00027D3A /* CarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB3845A29FBF9FB00027D3A /* CarViewController.swift */; };
 		EAEEBEB829C3844800AB5846 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEEBEB729C3844800AB5846 /* AppDelegate.swift */; };
 		EAEEBEBA29C3844800AB5846 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEEBEB929C3844800AB5846 /* SceneDelegate.swift */; };
 		EAEEBEBC29C3844800AB5846 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEEBEBB29C3844800AB5846 /* ViewController.swift */; };
@@ -24,6 +26,8 @@
 		EA9D65FF29E1CD6F00D7BCF8 /* CarsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarsService.swift; sourceTree = "<group>"; };
 		EA9D662B29FA549900D7BCF8 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		EA9D663A29FBB7FC00D7BCF8 /* SuperSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperSearchViewController.swift; sourceTree = "<group>"; };
+		EA9D663C29FBF09D00D7BCF8 /* Singleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
+		EAB3845A29FBF9FB00027D3A /* CarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarViewController.swift; sourceTree = "<group>"; };
 		EAEEBEB429C3844800AB5846 /* AVBY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AVBY.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAEEBEB729C3844800AB5846 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EAEEBEB929C3844800AB5846 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -68,10 +72,12 @@
 			children = (
 				EAEEBEB729C3844800AB5846 /* AppDelegate.swift */,
 				EAEEBEB929C3844800AB5846 /* SceneDelegate.swift */,
-				EAEEBEBB29C3844800AB5846 /* ViewController.swift */,
 				EA9D65FF29E1CD6F00D7BCF8 /* CarsService.swift */,
+				EAEEBEBB29C3844800AB5846 /* ViewController.swift */,
+				EAB3845A29FBF9FB00027D3A /* CarViewController.swift */,
 				EAEEBECD29D5DC6700AB5846 /* CreateCarViewController.swift */,
 				EA9D663A29FBB7FC00D7BCF8 /* SuperSearchViewController.swift */,
+				EA9D663C29FBF09D00D7BCF8 /* Singleton.swift */,
 				EAEEBECB29D412FB00AB5846 /* Car.swift */,
 				EA9D662B29FA549900D7BCF8 /* ImagePicker.swift */,
 				EAEEBEBD29C3844800AB5846 /* Main.storyboard */,
@@ -154,9 +160,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAEEBECE29D5DC6700AB5846 /* CreateCarViewController.swift in Sources */,
+				EA9D663D29FBF09E00D7BCF8 /* Singleton.swift in Sources */,
 				EAEEBEBC29C3844800AB5846 /* ViewController.swift in Sources */,
 				EA9D660029E1CD6F00D7BCF8 /* CarsService.swift in Sources */,
 				EA9D662C29FA549900D7BCF8 /* ImagePicker.swift in Sources */,
+				EAB3845B29FBF9FB00027D3A /* CarViewController.swift in Sources */,
 				EAEEBEB829C3844800AB5846 /* AppDelegate.swift in Sources */,
 				EAEEBECC29D412FB00AB5846 /* Car.swift in Sources */,
 				EA9D663B29FBB7FC00D7BCF8 /* SuperSearchViewController.swift in Sources */,

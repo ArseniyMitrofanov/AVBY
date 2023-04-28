@@ -49,7 +49,7 @@ class SuperSearchViewController: UIViewController {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.borderStyle = .roundedRect
-     
+        
         textField.placeholder = "Год<"
         textField.delegate = self
         return textField
@@ -58,7 +58,7 @@ class SuperSearchViewController: UIViewController {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.borderStyle = .roundedRect
-     
+        
         textField.placeholder = "<Год"
         textField.delegate = self
         return textField
@@ -67,7 +67,7 @@ class SuperSearchViewController: UIViewController {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.borderStyle = .roundedRect
-
+        
         textField.placeholder = "<Цена($)"
         textField.delegate = self
         return textField
@@ -76,7 +76,7 @@ class SuperSearchViewController: UIViewController {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.borderStyle = .roundedRect
-
+        
         textField.placeholder = "<Цена($)"
         textField.delegate = self
         return textField
@@ -85,7 +85,7 @@ class SuperSearchViewController: UIViewController {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.borderStyle = .roundedRect
-     
+        
         textField.placeholder = "Пробег(км)<"
         textField.delegate = self
         return textField
@@ -94,7 +94,7 @@ class SuperSearchViewController: UIViewController {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.borderStyle = .roundedRect
-     
+        
         textField.placeholder = "<Пробег(км)"
         textField.delegate = self
         return textField
@@ -121,9 +121,8 @@ class SuperSearchViewController: UIViewController {
         super.viewDidLoad()
         makeConstraints()
     }
-    
     func makeConstraints(){
-
+        
         self.view.addSubview(verticalStackView)
         
         verticalStackView.addArrangedSubview(engineTypeButton)
@@ -164,11 +163,11 @@ class SuperSearchViewController: UIViewController {
         }()
         verticalStackView.addArrangedSubview(pHorStView)
         verticalStackView.addArrangedSubview(searchButton)
-       
+        
         
         
         NSLayoutConstraint.activate([
-           
+            
             verticalStackView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             verticalStackView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             verticalStackView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
@@ -180,11 +179,46 @@ class SuperSearchViewController: UIViewController {
             engineTypeButton.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor, multiplier: 0.7),
             pHorStView.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor, multiplier: 0.7),
             searchButton.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor, multiplier: 0.7),
-          
+            
             
         ])
     }
     @objc func searchCar(){
+        if (lYearTextField.text != nil) &&
+            (Int(lYearTextField.text!) != nil) &&
+            (uYearTextField.text != nil) &&
+            (Int(uYearTextField.text!) != nil) &&
+            (Int(lYearTextField.text!)! <= Int(uYearTextField.text!)!) &&
+            (lPriceTextField.text != nil) &&
+            (Int(lPriceTextField.text!) != nil) &&
+            (uPriceTextField.text != nil) &&
+            (Int(uPriceTextField.text!) != nil) &&
+            (Int(lPriceTextField.text!)! <= Int(uPriceTextField.text!)!) &&
+            (lMileageTextField.text != nil) &&
+            (Int(lMileageTextField.text!) != nil) &&
+            (uMileageTextField.text != nil) &&
+            (Int(uMileageTextField.text!) != nil) &&
+            (Int(lMileageTextField.text!)! <= Int(uMileageTextField.text!)!) &&
+            brandTextField.text != nil &&
+            nameTextField.text != nil  {
+            var arrayCars = CarsService.open.fetchArrayCars()
+                arrayCars = arrayCars.filter { car in
+                    car.brand.contains(brandTextField.text!) &&
+                    car.name.contains(nameTextField.text!) &&
+                    (Int(lYearTextField.text!)! <= car.year) &&
+                     (car.year <= Int(uYearTextField.text!)!) &&
+                    (Int(lPriceTextField.text!)! <= car.price) &&
+                     (car.price <= Int(uPriceTextField.text!)!) &&
+                    (Int(lMileageTextField.text!)! <= car.mileage) &&
+                     (car.mileage <= Int(uMileageTextField.text!)!) &&
+                    (car.gearBoxType == gearBox) &&
+                    (car.engineType == engineType)
+                
+            }
+            Singleton.shared.vcShouldSuperSearch = true
+            Singleton.shared.arrayCars = arrayCars
+            navigationController?.popViewController(animated: true)
+        }
         
     }
     @objc func showEngineTypeMenu(_ sender: UIButton) {
@@ -232,7 +266,6 @@ class SuperSearchViewController: UIViewController {
         present(menu, animated: true, completion: nil)
     }
 }
-
 extension SuperSearchViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         print("hehehe")

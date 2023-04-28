@@ -36,12 +36,12 @@ struct Car: Hashable {
     let name: String//
     let volume: Double//
     let horsePower: Int//
-    let gearBoxType: GearBoxType//
+    let gearBoxType: GearBoxType//////////////////////////
     let color: String//
     let bodyType: BodyType//
-    let description: String
+    let description: String//////////////////////////////////
     let engineType: EngineType//
-    let ownerContacts: String//
+    let ownerContacts: String//////////////////////////////////////
     let photo: UIImage//
     
     init(brand: String, year: Int, price: Int, mileage: Int, name: String, volume: Double, horsePower: Int, gearBoxType: GearBoxType, color: String, bodyType: BodyType, description: String, engineType: EngineType, ownerContacts: String, photo: UIImage) {
