@@ -33,4 +33,7 @@ class CarsService: NSObject {
     func fetchArrayCars() -> [Car]{
         return arrayCars
     }
+    func addCar(car: Car) {
+        arrayCars.append(car)
+    }
 }

@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EA8A0F1029DC10440016F8B3 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8A0F0F29DC10440016F8B3 /* CollectionViewCell.swift */; };
 		EA9D660029E1CD6F00D7BCF8 /* CarsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D65FF29E1CD6F00D7BCF8 /* CarsService.swift */; };
+		EA9D662C29FA549900D7BCF8 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D662B29FA549900D7BCF8 /* ImagePicker.swift */; };
+		EA9D663B29FBB7FC00D7BCF8 /* SuperSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9D663A29FBB7FC00D7BCF8 /* SuperSearchViewController.swift */; };
 		EAEEBEB829C3844800AB5846 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEEBEB729C3844800AB5846 /* AppDelegate.swift */; };
 		EAEEBEBA29C3844800AB5846 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEEBEB929C3844800AB5846 /* SceneDelegate.swift */; };
 		EAEEBEBC29C3844800AB5846 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEEBEBB29C3844800AB5846 /* ViewController.swift */; };
@@ -20,8 +21,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		EA8A0F0F29DC10440016F8B3 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		EA9D65FF29E1CD6F00D7BCF8 /* CarsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarsService.swift; sourceTree = "<group>"; };
+		EA9D662B29FA549900D7BCF8 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		EA9D663A29FBB7FC00D7BCF8 /* SuperSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperSearchViewController.swift; sourceTree = "<group>"; };
 		EAEEBEB429C3844800AB5846 /* AVBY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AVBY.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAEEBEB729C3844800AB5846 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EAEEBEB929C3844800AB5846 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -64,13 +66,14 @@
 		EAEEBEB629C3844800AB5846 /* AVBY */ = {
 			isa = PBXGroup;
 			children = (
-				EA8A0F0F29DC10440016F8B3 /* CollectionViewCell.swift */,
 				EAEEBEB729C3844800AB5846 /* AppDelegate.swift */,
 				EAEEBEB929C3844800AB5846 /* SceneDelegate.swift */,
 				EAEEBEBB29C3844800AB5846 /* ViewController.swift */,
 				EA9D65FF29E1CD6F00D7BCF8 /* CarsService.swift */,
 				EAEEBECD29D5DC6700AB5846 /* CreateCarViewController.swift */,
+				EA9D663A29FBB7FC00D7BCF8 /* SuperSearchViewController.swift */,
 				EAEEBECB29D412FB00AB5846 /* Car.swift */,
+				EA9D662B29FA549900D7BCF8 /* ImagePicker.swift */,
 				EAEEBEBD29C3844800AB5846 /* Main.storyboard */,
 				EAEEBEC029C3844900AB5846 /* Assets.xcassets */,
 				EAEEBEC229C3844900AB5846 /* LaunchScreen.storyboard */,
@@ -152,10 +155,11 @@
 			files = (
 				EAEEBECE29D5DC6700AB5846 /* CreateCarViewController.swift in Sources */,
 				EAEEBEBC29C3844800AB5846 /* ViewController.swift in Sources */,
-				EA8A0F1029DC10440016F8B3 /* CollectionViewCell.swift in Sources */,
 				EA9D660029E1CD6F00D7BCF8 /* CarsService.swift in Sources */,
+				EA9D662C29FA549900D7BCF8 /* ImagePicker.swift in Sources */,
 				EAEEBEB829C3844800AB5846 /* AppDelegate.swift in Sources */,
 				EAEEBECC29D412FB00AB5846 /* Car.swift in Sources */,
+				EA9D663B29FBB7FC00D7BCF8 /* SuperSearchViewController.swift in Sources */,
 				EAEEBEBA29C3844800AB5846 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -303,6 +307,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A87RVX8TPK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AVBY/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -330,6 +335,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A87RVX8TPK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AVBY/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

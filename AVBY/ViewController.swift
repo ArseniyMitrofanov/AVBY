@@ -52,6 +52,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDel
         textField.delegate = self
         carsCollectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: generateCollectionViewLayout())
         carsCollectionView?.translatesAutoresizingMaskIntoConstraints = false
+        carsCollectionView.showsVerticalScrollIndicator = true
         carsCollectionView.delegate = self
         carsCollectionView.refreshControl = UIRefreshControl()
         carsCollectionView.refreshControl?.addTarget(self, action: #selector(refreshCollectionView), for: .valueChanged)
@@ -60,7 +61,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDel
         
     }
     override func viewWillAppear(_ animated: Bool) {
-        loadSortedData(textToSort: nil)
+        loadData(arrayCars: sortName(textToSort: nil))
     }
     
     func makeLayout(){
@@ -86,15 +87,16 @@ class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDel
     func generateCollectionViewLayout() -> UICollectionViewLayout {
         let sectionProvider = {
             (int: Int, enviroment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection in
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1/4))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1/4))
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+            let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
             let section = NSCollectionLayoutSection(group: group)
             section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
             return section
         }
         return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
+  
     }
     func createDataSource() {
         
@@ -151,14 +153,14 @@ class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDel
             
         }
     }
-    func loadSortedData(textToSort: String?){
+    func sortName(textToSort: String?) -> [Car]{
         var arrayCars = CarsService.open.fetchArrayCars()
         if (textToSort != nil)&&(textToSort != "") {
             arrayCars = arrayCars.filter { car in
                 car.brand.contains(textToSort!)||car.name.contains(textToSort!)
             }
         }
-        loadData(arrayCars: arrayCars)
+        return arrayCars
     }
     func loadData(arrayCars: [Car]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Car>()
@@ -169,7 +171,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDel
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
-        loadSortedData(textToSort: textField.text)
+        loadData(arrayCars: sortName(textToSort: textField.text))
         return true
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -188,14 +190,14 @@ class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDel
         navigationController?.pushViewController(vc, animated: true)
     }
     @objc func superSearchButtonTapped(){
-        let vc = CreateCarViewController()
+        let vc = SuperSearchViewController()
         vc.view.backgroundColor = .white
         let backBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem = backBarButtonItem
         navigationController?.pushViewController(vc, animated: true)
     }
     @objc func refreshCollectionView(){
-        loadSortedData(textToSort: textField.text)
+      
         carsCollectionView.refreshControl?.endRefreshing()
     }
     
