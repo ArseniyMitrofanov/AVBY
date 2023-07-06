@@ -8,10 +8,10 @@
 import Foundation
 import UIKit
 class CreateCarViewController: UIViewController, UITextFieldDelegate {
-    private lazy var bodyType:BodyType = .sedan
+    private lazy var bodyType: String = BodyType.sedan
     private var carImage: UIImage?
-    private lazy var engineType: EngineType = .disel
-    private lazy var gearBox: GearBoxType = .automatic
+    private lazy var engineType: String = EngineType.disel
+    private lazy var gearBox: String = GearBoxType.automatic
     private lazy var imagePicker: ImagePicker = {
         let imagePicker = ImagePicker()
         imagePicker.delegate = self
@@ -162,6 +162,7 @@ class CreateCarViewController: UIViewController, UITextFieldDelegate {
     }()
     let carImageView: UIImageView = {
         let view = UIImageView()
+        view.contentMode = .scaleAspectFill
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -238,15 +239,15 @@ class CreateCarViewController: UIViewController, UITextFieldDelegate {
     @objc func showBodyTypeMenu(_ sender: UIButton) {
         let menu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         menu.addAction(UIAlertAction(title: "седан", style: .default, handler: { [weak self] _ in
-            self!.bodyType = .sedan
+            self!.bodyType = BodyType.sedan
             sender.setTitle("седан", for: .normal)
         }))
         menu.addAction(UIAlertAction(title: "купе", style: .default, handler: { [weak self] _ in
-            self!.bodyType = .coupe
+            self!.bodyType = BodyType.coupe
             sender.setTitle("купе", for: .normal)
         }))
         menu.addAction(UIAlertAction(title: "универсал", style: .default, handler: {[weak self] _ in
-            self!.bodyType = .shotingBrake
+            self!.bodyType = BodyType.shotingBrake
             sender.setTitle("универсал", for: .normal)
         }))
         menu.popoverPresentationController?.sourceView = sender
@@ -256,23 +257,23 @@ class CreateCarViewController: UIViewController, UITextFieldDelegate {
     @objc func showEngineTypeMenu(_ sender: UIButton) {
         let menu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         menu.addAction(UIAlertAction(title: "дизель", style: .default, handler: { [weak self] _ in
-            self!.engineType = .disel
+            self!.engineType = EngineType.disel
             sender.setTitle("дизель", for: .normal)
         }))
         menu.addAction(UIAlertAction(title: "бензин", style: .default, handler: { [weak self] _ in
-            self!.engineType = .petrol
+            self!.engineType = EngineType.petrol
             sender.setTitle("бензин", for: .normal)
         }))
         menu.addAction(UIAlertAction(title: "газ", style: .default, handler: {[weak self] _ in
-            self!.engineType = .gas
+            self!.engineType = EngineType.gas
             sender.setTitle("газ", for: .normal)
         }))
         menu.addAction(UIAlertAction(title: "электро", style: .default, handler: {[weak self] _ in
-            self!.engineType = .electic
+            self!.engineType = EngineType.electic
             sender.setTitle("электро", for: .normal)
         }))
         menu.addAction(UIAlertAction(title: "гибрид", style: .default, handler: {[weak self] _ in
-            self!.engineType = .hybrid
+            self!.engineType = EngineType.hybrid
             sender.setTitle("гибрид", for: .normal)
         }))
         menu.popoverPresentationController?.sourceView = sender
@@ -282,15 +283,15 @@ class CreateCarViewController: UIViewController, UITextFieldDelegate {
     @objc func showGearBoxMenu(_ sender: UIButton) {
         let menu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         menu.addAction(UIAlertAction(title: "автомат", style: .default, handler: { [weak self] _ in
-            self!.gearBox = .automatic
+            self!.gearBox = GearBoxType.automatic
             sender.setTitle("автомат", for: .normal)
         }))
         menu.addAction(UIAlertAction(title: "механика", style: .default, handler: { [weak self] _ in
-            self!.gearBox = .manual
+            self!.gearBox = GearBoxType.manual
             sender.setTitle("механика", for: .normal)
         }))
         menu.addAction(UIAlertAction(title: "вариатор", style: .default, handler: {[weak self] _ in
-            self!.gearBox = .variator
+            self!.gearBox = GearBoxType.variator
             sender.setTitle("вариатор", for: .normal)
         }))
         menu.popoverPresentationController?.sourceView = sender
@@ -315,8 +316,9 @@ class CreateCarViewController: UIViewController, UITextFieldDelegate {
                 priceTextField.text != nil &&
                 Int(priceTextField.text!) != nil &&
                 contactTextField.text != nil {
-            let newCar = Car(brand: brandTextField.text!, year: Int(yearTextField.text!)!, price: Int(priceTextField.text!)!, mileage: Int(mileageTextField.text!)!, name: nameTextField.text!, volume: Double(yearTextField.text!)!, horsePower: Int(hpTextField.text!)!, gearBoxType: gearBox, color: colorTextField.text!, bodyType: bodyType, description: carDescription.text!, engineType: engineType, ownerContacts: contactTextField.text!, photo: carImageView.image ?? UIImage(systemName: "car")!)
-            CarsService.open.addCar(car: newCar)
+            let newCar = Car(brand: brandTextField.text!, year: Int(yearTextField.text!)!, price: Int(priceTextField.text!)!, mileage: Int(mileageTextField.text!)!, name: nameTextField.text!, volume: Double(volumeTextField.text!)!, horsePower: Int(hpTextField.text!)!, gearBoxType: gearBox, color: colorTextField.text!, bodyType: bodyType, description: carDescription.text!, engineType: engineType, ownerContacts: contactTextField.text!, photo: carImageView.image ?? UIImage(systemName: "car")!)
+            CarsService.shared.addCar(car: newCar)
+            CarsService.shared.postCar(car: newCar)
             navigationController?.popViewController(animated: true)
         }
     }

@@ -8,8 +8,8 @@
 import Foundation
 import UIKit
 class SuperSearchViewController: UIViewController {
-    private lazy var engineType: EngineType = .disel
-    private lazy var gearBox: GearBoxType = .automatic
+    private lazy var engineType: String = EngineType.disel
+    private lazy var gearBox: String = GearBoxType.automatic
     private lazy var verticalStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
@@ -201,7 +201,7 @@ class SuperSearchViewController: UIViewController {
             (Int(lMileageTextField.text!)! <= Int(uMileageTextField.text!)!) &&
             brandTextField.text != nil &&
             nameTextField.text != nil  {
-            var arrayCars = CarsService.open.fetchArrayCars()
+            var arrayCars = CarsService.shared.fetchArrayCars()
                 arrayCars = arrayCars.filter { car in
                     car.brand.contains(brandTextField.text!) &&
                     car.name.contains(nameTextField.text!) &&
@@ -224,23 +224,23 @@ class SuperSearchViewController: UIViewController {
     @objc func showEngineTypeMenu(_ sender: UIButton) {
         let menu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         menu.addAction(UIAlertAction(title: "дизель", style: .default, handler: { [weak self] _ in
-            self!.engineType = .disel
+            self!.engineType = EngineType.disel
             sender.setTitle("дизель", for: .normal)
         }))
         menu.addAction(UIAlertAction(title: "бензин", style: .default, handler: { [weak self] _ in
-            self!.engineType = .petrol
+            self!.engineType = EngineType.petrol
             sender.setTitle("бензин", for: .normal)
         }))
         menu.addAction(UIAlertAction(title: "газ", style: .default, handler: {[weak self] _ in
-            self!.engineType = .gas
+            self!.engineType = EngineType.gas
             sender.setTitle("газ", for: .normal)
         }))
         menu.addAction(UIAlertAction(title: "электро", style: .default, handler: {[weak self] _ in
-            self!.engineType = .electic
+            self!.engineType = EngineType.electic
             sender.setTitle("электро", for: .normal)
         }))
         menu.addAction(UIAlertAction(title: "гибрид", style: .default, handler: {[weak self] _ in
-            self!.engineType = .hybrid
+            self!.engineType = EngineType.hybrid
             sender.setTitle("гибрид", for: .normal)
         }))
         menu.popoverPresentationController?.sourceView = sender
@@ -250,15 +250,15 @@ class SuperSearchViewController: UIViewController {
     @objc func showGearBoxMenu(_ sender: UIButton) {
         let menu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         menu.addAction(UIAlertAction(title: "автомат", style: .default, handler: { [weak self] _ in
-            self!.gearBox = .automatic
+            self!.gearBox = GearBoxType.automatic
             sender.setTitle("автомат", for: .normal)
         }))
         menu.addAction(UIAlertAction(title: "механика", style: .default, handler: { [weak self] _ in
-            self!.gearBox = .manual
+            self!.gearBox = GearBoxType.manual
             sender.setTitle("механика", for: .normal)
         }))
         menu.addAction(UIAlertAction(title: "вариатор", style: .default, handler: {[weak self] _ in
-            self!.gearBox = .variator
+            self!.gearBox = GearBoxType.variator
             sender.setTitle("вариатор", for: .normal)
         }))
         menu.popoverPresentationController?.sourceView = sender

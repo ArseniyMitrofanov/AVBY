@@ -9,22 +9,22 @@ import Foundation
 import UIKit
 
 enum BodyType {
-    case sedan
-    case coupe
-    case shotingBrake
+    static let sedan = "sedan"
+    static let coupe = "coupe"
+    static let shotingBrake = "shotingBrake"
 }
 
 enum GearBoxType {
-    case automatic
-    case manual
-    case variator
+    static let automatic = "automatic"
+    static let manual = "manual"
+    static let variator = "variator"
 }
 enum EngineType {
-    case disel
-    case petrol
-    case gas
-    case electic
-    case hybrid
+    static let disel = "disel"
+    static let petrol = "petrol"
+    static let gas = "gas"
+    static let electic = "electic"
+    static let hybrid = "hybrid"
 }
 
 struct Car: Hashable {
@@ -36,15 +36,15 @@ struct Car: Hashable {
     let name: String//
     let volume: Double//
     let horsePower: Int//
-    let gearBoxType: GearBoxType//////////////////////////
+    let gearBoxType: String//////////////////////////
     let color: String//
-    let bodyType: BodyType//
+    let bodyType: String//
     let description: String//////////////////////////////////
-    let engineType: EngineType//
+    let engineType: String//
     let ownerContacts: String//////////////////////////////////////
     let photo: UIImage//
     
-    init(brand: String, year: Int, price: Int, mileage: Int, name: String, volume: Double, horsePower: Int, gearBoxType: GearBoxType, color: String, bodyType: BodyType, description: String, engineType: EngineType, ownerContacts: String, photo: UIImage) {
+    init(brand: String, year: Int, price: Int, mileage: Int, name: String, volume: Double, horsePower: Int, gearBoxType: String, color: String, bodyType: String, description: String, engineType: String, ownerContacts: String, photo: UIImage) {
         self.brand = brand
         self.year = year
         self.price = price
@@ -60,4 +60,21 @@ struct Car: Hashable {
         self.ownerContacts = ownerContacts
         self.photo = photo
     }
+}
+
+struct CarWithURL{
+    let brand: String//
+    let year: Int//
+    let price: Int//
+    let mileage: Int//
+    let name: String//
+    let volume: Double//
+    let horsePower: Int//
+    let gearBoxType: String//////////////////////////
+    let color: String//
+    let bodyType: String//
+    let description: String//////////////////////////////////
+    let engineType: String//
+    let ownerContacts: String//////////////////////////////////////
+    let photo: String//
 }

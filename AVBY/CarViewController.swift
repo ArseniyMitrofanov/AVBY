@@ -15,6 +15,8 @@ class CarViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         let ImageView = UIImageView(image: car.photo)
+        ImageView.contentMode = .scaleAspectFill
+        ImageView.clipsToBounds = true
         ImageView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.width)
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -32,23 +34,27 @@ class CarViewController: UIViewController {
         bodyLabel.text = car.color + " "
         switch car.bodyType {
             
-        case .sedan:
+        case BodyType.sedan:
             bodyLabel.text?.append("седан")
-        case .coupe:
+        case BodyType.coupe:
             bodyLabel.text?.append("купе")
-        case .shotingBrake:
+        case BodyType.shotingBrake:
             bodyLabel.text?.append("универсал")
+        default:
+            print("error")
         }
         let gearLabel = UILabel()
         gearLabel.font = .systemFont(ofSize: 20)
         switch car.gearBoxType{
             
-        case .automatic:
+        case GearBoxType.automatic:
             gearLabel.text = "Автомат"
-        case .manual:
+        case GearBoxType.manual:
             gearLabel.text = "Механика"
-        case .variator:
+        case GearBoxType.variator:
             gearLabel.text = "Вариатор"
+        default:
+            print("error")
         }
         let yearMileageLabel = UILabel()
         yearMileageLabel.font = .systemFont(ofSize: 20)
@@ -57,16 +63,18 @@ class CarViewController: UIViewController {
         engineLabel.font = .systemFont(ofSize: 20)
         engineLabel.text = ""
         switch car.engineType {
-        case .disel:
+        case EngineType.disel:
             engineLabel.text?.append(String(car.volume) + " л. Дизель, ")
-        case .petrol:
+        case EngineType.petrol:
             engineLabel.text?.append(String(car.volume) + " л. Бензин, ")
-        case .gas:
+        case EngineType.gas:
             engineLabel.text?.append(String(car.volume) + " л. Газ, ")
-        case .electic:
+        case EngineType.electic:
             engineLabel.text?.append("электро, ")
-        case .hybrid:
+        case EngineType.hybrid:
             engineLabel.text?.append(String(car.volume) + " л. Гибрид, ")
+        default:
+            print("error")
         }
         engineLabel.text?.append(String(car.horsePower) + " л. с.")
         let descriptionLabel = UILabel()

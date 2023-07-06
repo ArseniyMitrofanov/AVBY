@@ -7,9 +7,7 @@
 
 import UIKit
 
-enum Section {
-    case section
-}
+
 
 class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDelegate{
     var currentArrayCar: [Car]!
@@ -48,6 +46,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDel
     var carsDataSourse: UICollectionViewDiffableDataSource<Section, Car>!
     override func viewDidLoad() {
         super.viewDidLoad()
+        CarsService.shared.delegate = self
         superSearchButton.addTarget(self, action: #selector(superSearchButtonTapped), for: .touchUpInside)
         createCarButton.addTarget(self, action: #selector(createCarButtonTapped), for: .touchUpInside)
         textField.delegate = self
@@ -62,6 +61,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDel
         
     }
     override func viewWillAppear(_ animated: Bool) {
+//        CarsService.shared.getArrayCars()
         if Singleton.shared.vcShouldSuperSearch {
             self.superSearchButton.setImage(UIImage(systemName: "multiply"), for: .normal)
             self.superSearchButton.backgroundColor = .red
@@ -70,12 +70,12 @@ class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDel
                 currentArrayCar = Singleton.shared.arrayCars!
             }else{
                 loadData(arrayCars: sortName(textToSort: nil))
-                currentArrayCar = CarsService.open.fetchArrayCars()
+                currentArrayCar = CarsService.shared.fetchArrayCars()
                 print("error!!!")
             }
         }else{
             loadData(arrayCars: sortName(textToSort: nil))
-            currentArrayCar = CarsService.open.fetchArrayCars()
+            currentArrayCar = CarsService.shared.fetchArrayCars()
         }
     }
     
@@ -107,7 +107,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDel
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
             let section = NSCollectionLayoutSection(group: group)
-            section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+            section.orthogonalScrollingBehavior = .none
             return section
         }
         return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
@@ -120,7 +120,9 @@ class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDel
                 cell.contentView.subviews.forEach {$0.removeFromSuperview()}
             }
             let ImageView = UIImageView(image: car.photo)
+            ImageView.contentMode = .scaleAspectFill
             ImageView.frame = CGRect(x: 0, y: 0, width: cell.contentView.frame.height, height: cell.contentView.frame.height)
+            ImageView.clipsToBounds = true
             let stackView = UIStackView()
             stackView.axis = .vertical
             stackView.frame = CGRect(x: cell.contentView.frame.height + 5, y: 0, width: (cell.contentView.frame.width - cell.contentView.frame.height - 5), height: cell.contentView.frame.height)
@@ -136,16 +138,18 @@ class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDel
             let engineLabel = UILabel()
             engineLabel.text = ""
             switch car.engineType {
-            case .disel:
+            case EngineType.disel:
                 engineLabel.text?.append(String(car.volume) + " л. Дизель")
-            case .petrol:
+            case EngineType.petrol:
                 engineLabel.text?.append(String(car.volume) + " л. Бензин")
-            case .gas:
+            case EngineType.gas:
                 engineLabel.text?.append(String(car.volume) + " л. Газ")
-            case .electic:
+            case EngineType.electic:
                 engineLabel.text?.append("электро")
-            case .hybrid:
+            case EngineType.hybrid:
                 engineLabel.text?.append(String(car.volume) + " л. Гибрид")
+            default:
+                print("error")
             }
             let priceLabel = UILabel()
             priceLabel.text = String(car.price) + " $"
@@ -169,7 +173,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDel
         }
     }
     func sortName(textToSort: String?) -> [Car]{
-        var arrayCars = CarsService.open.fetchArrayCars()
+        var arrayCars = CarsService.shared.fetchArrayCars()
         if (textToSort != nil)&&(textToSort != "") {
             arrayCars = arrayCars.filter { car in
                 car.brand.contains(textToSort!)||car.name.contains(textToSort!)
@@ -219,10 +223,53 @@ class ViewController: UIViewController, UITextFieldDelegate, UICollectionViewDel
         }
     }
     @objc func refreshCollectionView(){
-        
+        CarsService.shared.getArrayCars()
+        if Singleton.shared.vcShouldSuperSearch {
+            self.superSearchButton.setImage(UIImage(systemName: "multiply"), for: .normal)
+            self.superSearchButton.backgroundColor = .red
+            if Singleton.shared.arrayCars != nil{
+                loadData(arrayCars: Singleton.shared.arrayCars!)
+                currentArrayCar = Singleton.shared.arrayCars!
+            }else{
+                loadData(arrayCars: sortName(textToSort: nil))
+                currentArrayCar = CarsService.shared.fetchArrayCars()
+                print("error!!!")
+            }
+        }else{
+            loadData(arrayCars: sortName(textToSort: nil))
+            currentArrayCar = CarsService.shared.fetchArrayCars()
+        }
         carsCollectionView.refreshControl?.endRefreshing()
     }
     
+    
+    
+}
+
+extension ViewController: CarsServiceDelegate {
+    func didSaveCar() {
+        let alert = UIAlertController(title: "Обьявление успешно сохранено на сервере", message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ок", style: .cancel))
+        present(alert, animated: true)
+    }
+    
+    func didFetchCar() {
+        if Singleton.shared.vcShouldSuperSearch {
+            self.superSearchButton.setImage(UIImage(systemName: "multiply"), for: .normal)
+            self.superSearchButton.backgroundColor = .red
+            if Singleton.shared.arrayCars != nil{
+                loadData(arrayCars: Singleton.shared.arrayCars!)
+                currentArrayCar = Singleton.shared.arrayCars!
+            }else{
+                loadData(arrayCars: sortName(textToSort: nil))
+                currentArrayCar = CarsService.shared.fetchArrayCars()
+                print("error!!!")
+            }
+        }else{
+            loadData(arrayCars: sortName(textToSort: nil))
+            currentArrayCar = CarsService.shared.fetchArrayCars()
+        }
+    }
     
     
 }
